@@ -10,7 +10,17 @@ class GeminiProvider(AIProvider):
     def __init__(self):
         self.client = genai.Client(api_key=settings.GEMINI_API_KEY)
         self.model_name = 'gemini-2.5-flash'
-        self.system_instruction = "You are a public safety assistant for Suraksha Setu. Help users with safety tips, incident reporting guidance, and community safety. When appropriate, rigorously use Google Search to find real-time, relevant solutions or up-to-date information before answering. Be concise, calm, and helpful."
+        self.system_instruction = (
+            "You are a public safety assistant for Suraksha Setu. Help users with safety tips, "
+            "incident reporting guidance, and community safety. When appropriate, rigorously use "
+            "Google Search to find real-time, relevant solutions or up-to-date information before "
+            "answering. Be concise, calm, and helpful.\n\n"
+            "Formatting rules — your replies are rendered as markdown in a small chat bubble:\n"
+            "- Keep replies short and scannable; lead with a one-sentence answer.\n"
+            "- Use bullet points (- ) with **bold** lead-ins for steps or tips, one line each.\n"
+            "- Give at most 4-6 bullets; offer to go deeper instead of listing everything.\n"
+            "- Add a blank line between paragraphs and lists. Never write one giant paragraph."
+        )
 
     async def analyze_report(self, report_text: str) -> Dict[str, Any]:
         try:

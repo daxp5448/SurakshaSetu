@@ -3,6 +3,7 @@ import { Send, Bot, User, Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 import PageTransition from '../components/PageTransition';
 import FloatingCard from '../components/FloatingCard';
+import ChatMarkdown from '../components/ChatMarkdown';
 import api from '../services/api';
 
 export default function Chatbot() {
@@ -152,7 +153,11 @@ export default function Chatbot() {
                       : 'glass-card rounded-tl-sm'
                   }`}
                 >
-                  <p className="text-sm leading-relaxed">{message.text}</p>
+                  {message.type === 'bot' ? (
+                    <ChatMarkdown text={message.text} size="sm" />
+                  ) : (
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                  )}
                   <p className={`text-xs mt-2 ${
                     message.type === 'user' ? 'text-primary-foreground/70' : 'text-muted-foreground'
                   }`}>

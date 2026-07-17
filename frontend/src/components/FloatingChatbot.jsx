@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MessageCircle, X, Send, Bot, Minimize2, Maximize2 } from 'lucide-react';
 import gsap from 'gsap';
+import ChatMarkdown from './ChatMarkdown';
 import api from '../services/api';
 
 export default function FloatingChatbot() {
@@ -232,7 +233,11 @@ export default function FloatingChatbot() {
                   : 'bg-white/5 border border-white/10 rounded-tl-sm'
               }`}
             >
-              <p className="text-xs leading-relaxed">{message.text}</p>
+              {message.type === 'bot' ? (
+                <ChatMarkdown text={message.text} size="xs" />
+              ) : (
+                <p className="text-xs leading-relaxed whitespace-pre-wrap">{message.text}</p>
+              )}
               <p className={`text-[10px] mt-1 ${
                 message.type === 'user' ? 'text-primary-foreground/70' : 'text-muted-foreground'
               }`}>
